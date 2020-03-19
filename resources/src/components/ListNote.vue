@@ -41,6 +41,17 @@
 
             // fungsi emit mengirimkan sebuah event yang dapat ditangkap didalam app.vue, formNote.vue listNote.vue ataupun component lainnya
             this.$root.$emit('emitForm', dataForm);
+            },
+            createNewId(){
+                let newId = 0;
+                
+                if(this.notes.length === 0){
+                    newId = 1;
+                }else{
+                    newId = this.notes[this.notes.length - 1].id + 1;
+                }
+
+                return newId;
             }
         },
         mounted(){
@@ -56,7 +67,15 @@
                 
                 this.notes[noteIndex].title = data.title;
                 this.notes[noteIndex].description = data.description;
-            })
+            });
+
+            this.$root.$on('emitSaveNote', data => {
+                let newId = this.createNewId;
+                let newNote = { id:this.newId, 'title' : data.title, 'description' : data.description }
+
+                this.notes.push(newNote);
+                this.editNote(newId);
+            });
         }
     }
 </script>
