@@ -20,7 +20,7 @@
     </div>
     <div class="right">
       <!-- Form -->
-      <FormNote :propSaveNote="saveNote" :propRemoveNote="removeNote" :propUpdateNote="updateNote" />
+      <FormNote :propSaveNote="saveNote" :propUpdateNote="updateNote" />
     </div>
   </div>
 </template>
@@ -68,12 +68,6 @@ export default {
       
       this.notes[noteIndex].title = title;
       this.notes[noteIndex].description = description;
-    },
-    removeNote(id){
-      let noteIndex = this.notes.findIndex(note => note.id === id);
-      
-      // splice ini digunakan untuk membuat sebuah array berdasarkan nilai indexnya.
-      this.notes.splice(noteIndex, 1);
     }
   }
 }

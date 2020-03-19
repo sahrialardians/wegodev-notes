@@ -42,6 +42,14 @@
             // fungsi emit mengirimkan sebuah event yang dapat ditangkap didalam app.vue, formNote.vue listNote.vue ataupun component lainnya
             this.$root.$emit('emitForm', dataForm);
             }
+        },
+        mounted(){
+            this.$root.$on('emitRemoveNote', data => {
+                let noteIndex = this.notes.findIndex(note => note.id === data.id);
+                
+                // splice ini digunakan untuk membuat sebuah array berdasarkan nilai indexnya.
+                this.notes.splice(noteIndex, 1);
+            });
         }
     }
 </script>
