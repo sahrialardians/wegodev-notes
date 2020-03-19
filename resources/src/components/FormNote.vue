@@ -20,18 +20,7 @@
     export default {
         name: 'FormNote',
         props: {
-            propSaveNote: {
-                type: Function
-            },
-            propRemoveNote: {
-                type: Function
-            },
-            propUpdateNote: {
-                type: Function
-            },
-            propDataForm: {
-                type: Object
-            }
+            
         },
         data: function(){
             return{
@@ -43,15 +32,25 @@
         },
         methods: {
             submitSave(){
-                this.propSaveNote(this.title, this.description);
+                let data = {
+                    title: this.title,
+                    description: this.description
+                } 
+                this.$root.$emit('emitSaveNote', data);
                 this.resetinput();
             },
             submitUpdate(){
-                this.propUpdateNote(this.id, this.title, this.description);
+                let data = {
+                    id: this.id,
+                    title: this.title,
+                    description: this.description
+                }
+                this.$root.$emit('emitUpdateNote', data);
                 this.resetinput();
             },
             submitRemove(){
-                this.propRemoveNote(this.id);
+                let data = { id: this.id}
+                this.$root.$emit('emitRemoveNote', data);
                 this.resetinput();
             },
             resetinput(){
@@ -61,14 +60,16 @@
                 this.mode = 'save'
             }
         },
-        // watch digunakan untuk selalu memantau setiap kali ada perubahan berdasarkan data atau methode yang dibuat
-        watch: {
-            propDataForm: function(note) {
-                this.id = note.id;
-                this.title = note.title;
-                this.description = note.description;
-                this.mode = note.mode;
-            }
+        // mounted ini digunakan untuk mendeklarasikan yang harus dijalankan pertama kali dari sebuah komponen.
+        mounted(){
+            // on itu yg tadinya emit, disini menggunakan on karena akan menjadi penerima dari emit yang ada didalam listnote tersebut
+            // root akan mengacu pada komponen utama pada vue.js dan kompenonen utama sekarang adalah app.vue
+            this.$root.$on('emitForm', data => {
+                this.id = data.id;
+                this.title = data.title;
+                this.description = data.description;
+                this.mode = data.mode;
+            })
         }
     }
 </script>

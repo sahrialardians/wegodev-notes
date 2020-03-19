@@ -13,14 +13,14 @@
         <button @click="newNote" class="bg-success btn btn-new-note">
           New Note
         </button>
-        <ListNote :propNotes="notes" :propEditNote="editNote" />
+        <ListNote />
       </div>
       <!-- List -->
 
     </div>
     <div class="right">
       <!-- Form -->
-      <FormNote :propSaveNote="saveNote" :propRemoveNote="removeNote" :propUpdateNote="updateNote" :propDataForm="dataForm" />
+      <FormNote/>
     </div>
   </div>
 </template>
@@ -33,19 +33,6 @@ export default {
   name: 'App',
   data: function(){
             return{
-                dataForm: {},
-                notes: [
-                    {
-                        id: 1,
-                        title: 'Prepare lunch',
-                        description: 'Ambil sayur buat makan siang'
-                    },
-                    {
-                        id: 2,
-                        title: 'Washing Motorcyle',
-                        description: 'at 04:00 PM'
-                    }
-                ]
             }
         },
   components: {
@@ -55,44 +42,8 @@ export default {
   methods: {
     newNote(){
       // function untuk tambah note baru
-      this.dataForm = {
-        id: 0,
-        title: '',
-        description: '',
-        mode: 'save'
-      }
-    },
-    editNote(id){
-      this.dataForm = this.notes.find(note => note.id === id);
-      this.dataForm.mode = 'update';
-    },
-    saveNote(title, description){
-      // function untuk save note
-      let newId = 0;
-      
-      if(this.notes.length === 0){
-        newId = 1;
-      }else{
-        newId = this.notes[this.notes.length - 1].id + 1;
-      }
-      let newNote = { id:newId, 'title' : title, 'description' : description }
-
-      this.notes.push(newNote);
-      // code dibawah untuk menampikan data current setelah tambah data
-      // this.editNote(newId);
-    },
-    updateNote(id, title, description){
-      
-      let noteIndex = this.notes.findIndex(note => note.id === id);
-      
-      this.notes[noteIndex].title = title;
-      this.notes[noteIndex].description = description;
-    },
-    removeNote(id){
-      let noteIndex = this.notes.findIndex(note => note.id === id);
-      
-      // splice ini digunakan untuk membuat sebuah array berdasarkan nilai indexnya.
-      this.notes.splice(noteIndex, 1);
+      let dataForm = { id: 0, title: '', description: '', mode: 'save' }
+      this.$root.$emit('emitForm', dataForm);
     }
   }
 }
