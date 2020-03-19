@@ -58,11 +58,13 @@ export default {
       this.dataForm = {
         id: 0,
         title: '',
-        description: ''
+        description: '',
+        mode: 'save'
       }
     },
     editNote(id){
       this.dataForm = this.notes.find(note => note.id === id);
+      this.dataForm.mode = 'update';
     },
     saveNote(title, description){
       // function untuk save note
@@ -76,7 +78,7 @@ export default {
       let newNote = { id:newId, 'title' : title, 'description' : description }
 
       this.notes.push(newNote);
-      this.editNote(newId);
+      // this.editNote(newId);
     },
     updateNote(id, title, description){
       

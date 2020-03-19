@@ -1,9 +1,10 @@
 <template>
   <div class="FormNote">
     <div class="menu">
-        <form @submit="submitNote">
+        <form>
             <button type="button" @click="submitRemove" class="bg-danger btn btn-delete">Delete</button>
-            <button type="submit" class="bg-success btn">Save</button>
+            <button type="button" @click="submitSave"  class="bg-success btn" v-if="mode == 'save'">Save</button>
+            <button type="button" @click="submitUpdate"  class="bg-success btn" v-if="mode == 'update'">Update</button>
         </form>
     </div>
 
@@ -36,18 +37,18 @@
             return{
                 id: 0,
                 title: '',
-                description: ''
+                description: '',
+                mode: 'save'
             }
         },
         methods: {
-            submitNote(e){
-                e.preventDefault();
-                if(this.id === 0){
-                    this.propSaveNote(this.title, this.description);
-                }
-                else{
-                    this.propUpdateNote(this.id, this.title, this.description);
-                }
+            submitSave(){
+                this.propSaveNote(this.title, this.description);
+                this.resetinput();
+            },
+            submitUpdate(){
+                this.propUpdateNote(this.id, this.title, this.description);
+                this.resetinput();
             },
             submitRemove(){
                 this.propRemoveNote(this.id);
@@ -56,7 +57,8 @@
             resetinput(){
                 this.id = 0,
                 this.title = '',
-                this.description = ''
+                this.description = '',
+                this.mode = 'save'
             }
         },
         // watch digunakan untuk selalu memantau setiap kali ada perubahan berdasarkan data atau methode yang dibuat
@@ -65,6 +67,7 @@
                 this.id = note.id;
                 this.title = note.title;
                 this.description = note.description;
+                this.mode = note.mode;
             }
         }
     }
