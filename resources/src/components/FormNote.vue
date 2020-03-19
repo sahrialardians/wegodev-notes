@@ -27,9 +27,6 @@
             },
             propUpdateNote: {
                 type: Function
-            },
-            propDataForm: {
-                type: Object
             }
         },
         data: function(){
@@ -61,11 +58,16 @@
         },
         // watch digunakan untuk selalu memantau setiap kali ada perubahan berdasarkan data atau methode yang dibuat
         watch: {
-            propDataForm: function(note) {
-                this.id = note.id;
-                this.title = note.title;
-                this.description = note.description;
-            }
+        },
+        // mounted ini digunakan untuk mendeklarasikan yang harus dijalankan pertama kali dari sebuah komponen.
+        mounted(){
+            // on itu yg tadinya emit, disini menggunakan on karena akan menjadi penerima dari emit yang ada didalam listnote tersebut
+            // root akan mengacu pada komponen utama pada vue.js dan kompenonen utama sekarang adalah app.vue
+            this.$root.$on('emitForm', data => {
+                this.id = data.id;
+                this.title = data.title;
+                this.description = data.description;
+            })
         }
     }
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div class="ListNote">
       <ul>
-          <li v-for="(item, index) in propNotes" v-bind:key="index">
-            <button class="btn-note" @click="idNote(item.id)">
+          <li v-for="(item, index) in notes" v-bind:key="index">
+            <button class="btn-note" @click="editNote(item.id)">
                 <label>{{ item.title }}</label>
                 <span>{{ item.description }}</span>
             </button>
@@ -15,21 +15,32 @@
     export default {
         name: 'ListNote',
         props: {
-            propNotes: {
-                type: Array
-            },
             propEditNote: {
                 type: Function
             }
         },
         data: function(){
             return{
-
+                notes: [
+                    {
+                        id: 1,
+                        title: 'Prepare lunch',
+                        description: 'Ambil sayur buat makan siang'
+                    },
+                    {
+                        id: 2,
+                        title: 'Washing Motorcyle',
+                        description: 'at 04:00 PM'
+                    }
+                ]
             }
         },
         methods:{
-            idNote(id){
-                this.propEditNote(id);
+            editNote(id){
+            let dataForm = this.notes.find(note => note.id === id);
+
+            // fungsi emit mengirimkan sebuah event yang dapat ditangkap didalam app.vue, formNote.vue listNote.vue ataupun component lainnya
+            this.$root.$emit('emitForm', dataForm);
             }
         }
     }
