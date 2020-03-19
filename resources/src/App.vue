@@ -78,6 +78,7 @@ export default {
       let newNote = { id:newId, 'title' : title, 'description' : description }
 
       this.notes.push(newNote);
+      // code dibawah untuk menampikan data current setelah tambah data
       // this.editNote(newId);
     },
     updateNote(id, title, description){
