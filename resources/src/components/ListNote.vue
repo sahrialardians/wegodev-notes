@@ -22,16 +22,7 @@
         data: function(){
             return{
                 notes: [
-                    {
-                        id: 1,
-                        title: 'Prepare lunch',
-                        description: 'Ambil sayur buat makan siang'
-                    },
-                    {
-                        id: 2,
-                        title: 'Washing Motorcyle',
-                        description: 'at 04:00 PM'
-                    }
+                    
                 ]
             }
         },
@@ -53,9 +44,16 @@
                 }
 
                 return newId;
+            },
+            getData(){
+                axios.get('http://localhost/wegodev-notes/note').then(response =>{
+                    this.notes = response.data;
+                });
             }
         },
         mounted(){
+            this.getData();
+
             this.$root.$on('emitRemoveNote', data => {
                 let noteIndex = this.notes.findIndex(note => note.id === data.id);
                 
