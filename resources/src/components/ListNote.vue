@@ -70,7 +70,8 @@
             this.$root.$on('emitSaveNote', data => {
                 let newNote = { id:data.id, 'title' : data.title, 'description' : data.description }
 
-                this.notes.push(newNote);
+                // unshitf berfungsi jika ada data baru maka akan di letakan di bagian pertama
+                this.notes.unshift(newNote);
                 this.editNote(data.id);
             });
         }
