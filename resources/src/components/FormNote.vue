@@ -40,7 +40,7 @@
 
                 axios.post('http://localhost:8080/wegodev-notes/note/create', params).then(response =>{
                     let data = {
-                        id: this.response.data.id,
+                        id: response.data.id,
                         title: this.title,
                         description: this.description
                     } 
