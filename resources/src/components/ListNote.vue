@@ -12,6 +12,8 @@
 </template>
 
 <script type=text/javascript>
+    import axios from 'axios';
+
     export default {
         name: 'ListNote',
         props: {
@@ -46,8 +48,9 @@
                 return newId;
             },
             getData(){
-                axios.get('http://localhost/wegodev-notes/note').then(response =>{
+                axios.get('http://localhost:8080/wegodev-notes/note').then(response =>{
                     this.notes = response.data;
+                    // console.log(response);
                 });
             }
         },
