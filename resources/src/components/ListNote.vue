@@ -16,11 +16,6 @@
 
     export default {
         name: 'ListNote',
-        props: {
-            propEditNote: {
-                type: Function
-            }
-        },
         data: function(){
             return{
                 notes: [
@@ -36,17 +31,18 @@
             // fungsi emit mengirimkan sebuah event yang dapat ditangkap didalam app.vue, formNote.vue listNote.vue ataupun component lainnya
             this.$root.$emit('emitForm', dataForm);
             },
-            createNewId(){
-                let newId = 0;
+            // untuk membuat id baru 
+            // createNewId(){
+            //     let newId = 0;
                 
-                if(this.notes.length === 0){
-                    newId = 1;
-                }else{
-                    newId = this.notes[this.notes.length - 1].id + 1;
-                }
+            //     if(this.notes.length === 0){
+            //         newId = 1;
+            //     }else{
+            //         newId = this.notes[this.notes.length - 1].id + 1;
+            //     }
 
-                return newId;
-            },
+            //     return newId;
+            // },
             getData(){
                 axios.get('http://localhost:8080/wegodev-notes/note').then(response =>{
                     this.notes = response.data;
@@ -72,11 +68,10 @@
             });
 
             this.$root.$on('emitSaveNote', data => {
-                let newId = this.createNewId;
-                let newNote = { id:this.newId, 'title' : data.title, 'description' : data.description }
+                let newNote = { id:data.id, 'title' : data.title, 'description' : data.description }
 
                 this.notes.push(newNote);
-                this.editNote(newId);
+                this.editNote(data.id);
             });
         }
     }
