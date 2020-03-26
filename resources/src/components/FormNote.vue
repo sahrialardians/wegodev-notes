@@ -34,7 +34,7 @@
         },
         methods: {
             submitSave(){
-                params = new URLSearchParams();
+                let params = new URLSearchParams();
                 params.append('title', this.title);
                 params.append('description', this.description);
 
