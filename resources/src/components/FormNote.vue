@@ -34,12 +34,19 @@
         },
         methods: {
             submitSave(){
-                let data = {
-                    title: this.title,
-                    description: this.description
-                } 
-                this.$root.$emit('emitSaveNote', data);
-                this.resetinput();
+                params = URLSearchParams();
+                params.append('title', this.title);
+                params.append('description', this.description);
+
+                axios.post('http://localhost:8080/wegodev-notes/note/create', params).then(response =>{
+                    let data = {
+                        id: this.response.data.id,
+                        title: this.title,
+                        description: this.description
+                    } 
+                    this.$root.$emit('emitSaveNote', data);
+                    this.resetinput();
+                });
             },
             submitUpdate(){
                 let data = {
